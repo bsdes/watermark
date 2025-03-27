@@ -111,7 +111,7 @@ function drawWatermark() {
   const dpr = window.devicePixelRatio || 1;
 
   ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-  ctx.drawImage(currentImage, 0, 0, currentImage.width * dpr, currentImage.height * dpr);
+  ctx.drawImage(currentImage, 0, 0, currentImage.width, currentImage.height);
 
   ctx.globalAlpha = opacity;
   ctx.font = `${fontSize * dpr}px ${font}`;
