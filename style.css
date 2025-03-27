@@ -134,9 +134,8 @@ h2 {
 }
 
 canvas {
-  max-width: 100%;
+  width: auto;
   height: auto;
-  display: block;
 }
 
 .upload-box.dragging {
