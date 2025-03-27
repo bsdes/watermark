@@ -117,7 +117,7 @@ function drawWatermark() {
   ctx.drawImage(currentImage, 0, 0, targetWidth, targetHeight);
 
   ctx.globalAlpha = opacity;
-  ctx.font = `${fontSize * dpr}px ${font}`;
+  ctx.font = `${fontSize}px ${font}`;
   ctx.fillStyle = "white";
 
   if (position === "diagonal") {
@@ -129,13 +129,13 @@ function drawWatermark() {
     ctx.restore();
   } else if (position === "topleft") {
     ctx.textAlign = "left";
-    ctx.fillText(text, 20 * dpr, 40 * dpr);
+    ctx.fillText(text, 20, 40);
   } else if (position === "center") {
     ctx.textAlign = "center";
-    let snappedX = offsetX * dpr;
-    let snappedY = offsetY * dpr;
+    let snappedX = offsetX;
+    let snappedY = offsetY;
 
-    const snapThreshold = 20 * dpr;
+    const snapThreshold = 20;
     const centerX = previewCanvas.width / 2;
     const centerY = previewCanvas.height / 2;
 
