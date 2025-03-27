@@ -82,15 +82,16 @@ function loadImageToCanvas(file) {
     currentImage = img;
     const dpr = window.devicePixelRatio || 1;
 
-    const width = img.width;
-    const height = img.height;
+    const width = img.naturalWidth;
+    const height = img.naturalHeight;
 
     previewCanvas.width = width * dpr;
     previewCanvas.height = height * dpr;
     previewCanvas.style.width = width + "px";
     previewCanvas.style.height = height + "px";
 
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
 
     if (position === "center") {
       offsetX = width / 2;
