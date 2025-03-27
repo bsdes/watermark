@@ -88,8 +88,6 @@ function loadImageToCanvas(file) {
     previewCanvas.style.width = width + "px";
     previewCanvas.style.height = height + "px";
 
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-
     if (position === "center") {
       offsetX = width / 2;
       offsetY = height / 2;
