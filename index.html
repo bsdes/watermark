@@ -1,34 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="uk">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>easywater</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
   <div class="container">
     <div class="left-panel">
-      <div class="upload-area">
-        <label for="imageInput" class="upload-box">
-          <p>Drag & drop or click to upload Images</p>
-          <button>Upload Images</button>
-          <input type="file" id="imageInput" multiple accept="image/*" hidden />
-        </label>
+      <div class="vertical-label">easywater</div>
+      <div class="canvas-wrapper">
+        <div class="preview" id="previewContainer">
+          <canvas id="previewCanvas"></canvas>
+        </div>
+        <div class="upload-area">
+          <label for="imageInput" class="upload-box">
+            <p>Drag & drop or click to upload Images</p>
+            <button>Upload Images</button>
+            <input type="file" id="imageInput" multiple accept="image/*" hidden />
+          </label>
+        </div>
       </div>
       <div class="image-thumbnails" id="imageThumbnails"></div>
-      <button id="downloadBtn" class="download-btn">Download</button>
+      <div class="download-group">
+        <button class="download-btn" id="downloadBtn">Download</button>
+        <button class="download-btn" id="downloadAllBtn">Download All</button>
+        <button class="action-btn red" id="clearImagesBtn">🗑 Clear</button>
+        <button class="action-btn orange" id="resetSettingsBtn">🔄 Reset</button>
+      </div>
     </div>
-
     <div class="right-panel">
-      <h2>Watermark</h2>
+      <h2>Watermark Settings</h2>
       <div class="form-group">
+        <label class="switch-label">
+          <span>Use Logo instead of Text</span>
+          <label class="switch">
+            <input type="checkbox" id="useLogoSwitch" />
+            <span class="slider"></span>
+          </label>
+        </label>
+      </div>
+      <div class="form-group" id="textInputGroup">
         <label for="watermarkText">Text</label>
         <input type="text" id="watermarkText" value="Watermark" />
       </div>
-
+      <div class="form-group" id="logoInputGroup" style="display: none;">
+        <label for="logoUpload">Watermark Logo (PNG)</label>
+        <input type="file" id="logoUpload" accept="image/png" />
+      </div>
       <div class="form-group">
         <label for="fontSelect">Font</label>
         <select id="fontSelect">
@@ -37,35 +57,66 @@
           <option value="Courier New">Courier New</option>
         </select>
       </div>
-
       <div class="form-group">
         <label for="opacity">Opacity</label>
         <input type="range" id="opacity" min="0" max="1" step="0.05" value="0.5" />
       </div>
-
       <div class="form-group">
         <label for="fontSize">Size</label>
-        <input type="range" id="fontSize" min="12" max="200" step="1" value="32" />
+        <input type="range" id="fontSize" min="12" max="200" step="1" value="48" />
       </div>
-
-      <div class="form-group">
-        <label>Position</label>
-        <div class="position-options">
-          <button data-pos="center">●</button>
-          <button data-pos="topleft">TL</button>
-          <button data-pos="diagonal">/</button>
-          <button data-pos="grid">#</button>
+      <div class="form-group dual-input">
+        <div class="label-row">
+          <label for="angleRange">Rotation (°)</label>
+          <input type="number" id="angle" min="-180" max="180" step="5" value="0" />
         </div>
-
+        <input type="range" id="angleRange" min="-180" max="180" step="5" value="0" />
       </div>
-
-      <div class="preview" id="previewContainer">
-        <canvas id="previewCanvas"></canvas>
+      <div class="form-group dual-input">
+        <div class="label-row">
+          <label for="colsRange">Columns</label>
+          <input type="number" id="cols" min="1" max="10" step="1" value="1" />
+        </div>
+        <input type="range" id="colsRange" min="1" max="10" step="1" value="1" />
+      </div>
+      <div class="form-group dual-input">
+        <div class="label-row">
+          <label for="rowsRange">Rows</label>
+          <input type="number" id="rows" min="1" max="10" step="1" value="1" />
+        </div>
+        <input type="range" id="rowsRange" min="1" max="10" step="1" value="1" />
+      </div>
+      <div class="form-group dual-input">
+        <div class="label-row">
+          <label for="gapXRange">Interval X (px)</label>
+          <input type="number" id="gapX" min="0" max="1000" step="10" value="200" />
+        </div>
+        <input type="range" id="gapXRange" min="0" max="1000" step="10" value="200" />
+      </div>
+      <div class="form-group dual-input">
+        <div class="label-row">
+          <label for="gapYRange">Interval Y (px)</label>
+          <input type="number" id="gapY" min="0" max="1000" step="10" value="200" />
+        </div>
+        <input type="range" id="gapYRange" min="0" max="1000" step="10" value="200" />
       </div>
     </div>
   </div>
-
+  <footer class="site-footer">
+    <div class="footer-content">
+      <span>© 2025 Кунчич Владислав Дмитрович — easywater</span>
+      <span class="version">Версія: v0.24</span>
+      <a href="https://donatello.to/bs_cgi" target="_blank">☕ Підтримати розробку</a>
+    </div>
+  </footer>
+  <div class="modal-overlay" id="progressModal">
+    <div class="modal-content">
+      <p id="progressText">Preparing files...</p>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="ad-banner">🔥 Тут може бути ваша реклама 😎</div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
   <script src="script.js"></script>
 </body>
-
 </html>
