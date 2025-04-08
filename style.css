@@ -333,3 +333,10 @@ h2 {
   color: #aaa;
   font-style: italic;
 }
+.seo-text {
+  font-size: 0.001px; /* практично непомітно */
+  color: transparent; /* невидимо */
+  height: 0;
+  overflow: hidden;
+}
+
